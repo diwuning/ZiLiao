@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.nmpa.nmpaapp">
+    <!-- android:sharedUserId="android.uid.system" -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 摄像头权限 -->
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.VIBRATE" /> <!-- 震动权限 -->
+    <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- 个推SDK权限配置开始 -->
+    <!-- 必选权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" /> <!-- 以下为可选权限 -->
+    <!-- 支持iBeancon 需要蓝牙权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 支持个推3.0 电子围栏功能 -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 自定义权限 -->
+    <uses-permission android:name="getui.permission.GetuiService.${applicationId}" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <permission
+        android:name="getui.permission.GetuiService.${applicationId}"
+        android:protectionLevel="normal" /> <!-- 读取外置存储。如果开发者使用了so动态加载功能并且把so文件放在了外置存储区域，则需要申请该权限，否则不需要 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 录音权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" /> <!-- 环信 即时通讯 -->
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" /> <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
+    <!-- <uses-permission android:name="android.permission.CAMERA" /> -->
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" /> <!-- 悬浮窗权限 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" /> <!-- Mi推送配置 start -->
+    <permission
+        android:name="${applicationId}.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="${applicationId}.permission.MIPUSH_RECEIVE" />
+
+    <application
+        android:name=".base.BaseApplication"
+        android:allowBackup="true"
+        android:configChanges="locale"
+        android:icon="@mipmap/icon_firfapp"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:theme="@style/NmpaappTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
+        <!--选择检查人员-->
+        <activity android:name=".modules.unlicensed.CheckerListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan"
+            android:screenOrientation="portrait"></activity>
+        <!--选择从业人员-->
+        <activity android:name=".modules.unlicensed.EmployeeListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan"
+            android:screenOrientation="portrait"></activity>
+        <!--添加无证备案-->
+        <activity android:name=".modules.unlicensed.UnlicenseAddActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan"
+            android:screenOrientation="portrait"></activity>
+        <!--无证备案列表-->
+        <activity
+            android:name=".modules.unlicensed.UnlicensedActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
+        <service android:name=".modules.huanxin.record.RecordingService" />
+
+        <activity
+            android:name=".modules.huanxin.group.SharedFilesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" /> <!-- 退出群组提示框 -->
+        <activity
+            android:name=".modules.huanxin.group.ExitGroupDialog"
+            android:theme="@style/MyDialogStyleBottom" />
+        <activity
+            android:name=".modules.huanxin.group.EditActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseDingMsgSendActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".modules.huanxin.group.GroupSearchMessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.huanxin.group.GroupDetailsActivity"
+            android:screenOrientation="portrait" /> <!-- 转发消息 -->
+        <activity
+            android:name=".modules.huanxin.message.PickContactNoCheckboxActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.huanxin.message.ForwardMessageActivity"
+            android:screenOrientation="portrait" /> <!-- 群成员信息 -->
+        <activity
+            android:name=".modules.huanxin.ui.UserProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.huanxin.conference.ConferenceInviteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.huanxin.conference.ConferenceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.huanxin.group.GroupPickContactsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.huanxin.group.NewGroupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.huanxin.group.GroupsActivity"
+            android:screenOrientation="portrait" /> <!-- 长按弹出框 -->
+        <activity
+            android:name=".modules.huanxin.ui.ContextMenuActivity"
+            android:theme="@style/MyDialogStyle" />
+        <activity
+            android:name=".modules.huanxin.ui.RecorderVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.huanxin.ui.VideoCallActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.huanxin.ui.VoiceCallActivity"
+            android:screenOrientation="portrait" /> <!-- 下载文件 -->
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowNormalFileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" /> <!-- 显示下载大图页面 -->
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" />
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowVideoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".modules.huanxin.ui.ImageGridActivity" />
+        <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity" />
+        <activity android:name=".modules.huanxin.ui.ChatActivity" />
+        <activity android:name=".modules.huanxin.ui.NewFriendsMsgActivity" />
+        <activity android:name=".modules.huanxin.ui.AddContactActivity" />
+        <activity
+            android:name=".modules.huanxin.MSNMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".modules.enforce.RectificationPreviewActivity" />
+        <activity android:name=".modules.enforce.RectificationActivity" />
+        <activity
+            android:name=".modules.home.AllFunctionActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name=".modules.office.MapForOfficeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name=".modules.office.OfficeUpdateActivity"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.office.OfficeAddActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.employees.EmployeesAddActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.office.CheckRecordActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.office.SelfCheckDetailActivity"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.analysis.warning.WarningActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name=".modules.analysis.licence.AnalysisLicenceActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name=".modules.analysis.report.AnalysisReportActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name=".modules.analysis.mingchu.MingchuActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name=".modules.analysis.collect.AnalysisCollectActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name=".modules.analysis.cover.AnalysisCoverActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name=".modules.analysis.AnalysisTypeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name=".modules.analysis.DivisionAnalysisActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name=".modules.monitor.BackPlayerListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.monitor.BackPlayerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name=".modules.monitor.RealPlayerActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".modules.plan.CheckPlanActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.inspection.MapActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.notice.NoticeDetailActivity"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.notice.NoticeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.schedule.ScheduleDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.schedule.ScheduleActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity android:name=".modules.node.NodesActivity" />
+        <activity
+            android:name=".modules.analysis.AnalysisActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.monitor.MonitorListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.monitor.MonitorActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.examine.ExamineActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.examine.ExamineStopActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".apply.ApplyDetailActivity"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".apply.ApplyAddActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".apply.ApplyUpdateActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.document.WebViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name=".apply.ApplyActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.document.DocumentActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.notification.PushPlayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.notification.NotificationMsgActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.notification.NotificationActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.employees.LargeImgActivity"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.employees.EmployeesActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.office.OfficeDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.office.OfficeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.complaint.ComplaintDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.complaint.ComplaintActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.licence.LicenceDetailActivity"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.licence.LicenceActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.abnormal.AbnormalDetailActivity"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.abnormal.AbnormalSubjectActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" /> <!-- 行政处罚修改页 -->
+        <activity
+            android:name=".modules.punish.PunishUpdateActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.punish.ShopListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" /> <!-- 行政处罚详情页 -->
+        <activity
+            android:name=".modules.punish.PunishDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 行政处罚添加页 -->
+        <activity
+            android:name=".modules.punish.PunishAddActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" /> <!-- 行政处罚列表 -->
+        <activity
+            android:name=".modules.punish.PunishListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" />
+        <activity
+            android:name=".modules.enforce.EnforceDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" /> <!-- 扫描二维码 -->
+        <activity
+            android:name=".modules.home.ReviewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" /> <!-- auto layout -->
+        <meta-data
+            android:name="design_width"
+            android:value="750" />
+        <meta-data
+            android:name="design_height"
+            android:value="1334" />
+
+        <activity
+            android:name=".modules.SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <!-- 首页 -->
+        <activity
+            android:name=".modules.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" /> <!-- 排查单位 -->
+        <activity
+            android:name=".modules.inspection.TroubleshootUnitActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 隐患排查 -->
+        <activity
+            android:name=".modules.inspection.TroubleshootHiddenDangerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" /> <!-- 隐患信息 -->
+        <activity
+            android:name=".modules.inspection.TroubleshootHiddenDangerInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" /> <!-- 登陸頁面 -->
+        <activity
+            android:name=".modules.login.LoginActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" /> <!-- 上传门头照 -->
+        <activity
+            android:name=".modules.inspection.TroubleshootStorePhotoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" /> <!-- 手写 -->
+        <activity
+            android:name=".modules.inspection.TroubleshootSignatureActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" /> <!-- 执法记录 -->
+        <activity
+            android:name=".modules.enforce.LawEnforcementRecordsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" /> <!-- 执法记录 单位检查记录列表页 -->
+        <activity
+            android:name=".modules.enforce.LawEnforcementRecordsSingleActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden|adjustPan" /> <!-- 生成流通码 -->
+        <activity
+            android:name=".modules.home.CirculateActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Boxing.AppTheme" /> <!-- 扫描二维码 -->
+        <activity
+            android:name=".zxing.activity.CaptureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Boxing.AppTheme" /> <!-- android:launchMode="singleTask" -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.file.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/path_file" />
+            <!-- <meta-data -->
+            <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
+            <!-- android:resource="@xml/boxing_file_provider" /> -->
+        </provider> <!-- 个推SDK配置开始 -->
+        <!-- 配置的第三方参数属性 -->
+        <meta-data
+            android:name="PUSH_APPID"
+            android:value="${GETUI_APP_ID}" />
+        <meta-data
+            android:name="PUSH_APPKEY"
+            android:value="${GETUI_APP_KEY}" />
+        <meta-data
+            android:name="PUSH_APPSECRET"
+            android:value="${GETUI_APP_SECRET}" /> <!-- 配置SDK核心服务 -->
+        <!-- permission属性在2.13.1.0版本后必须配置 -->
+        <service
+            android:name="com.igexin.sdk.PushService"
+            android:exported="false"
+            android:label="NotificationCenter"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":pushservice">
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.service.message" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name="com.igexin.sdk.PushReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <!-- 以下三项为可选的action声明，有助于提高service存活率 -->
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.igexin.sdk.PushActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.igexin.sdk.GActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- 个推SDK配置结束 -->
+        <service
+            android:name=".service.GePushService"
+            android:exported="true"
+            android:label="PushService"
+            android:process=":pushservice" /> <!-- android:permission在2.13.1.0版本后必须配置 -->
+        <service
+            android:name=".service.GePushIntentService"
+            android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 百度地图 -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="Gr6GpdX7EEnHpxKZgzoj5xjaIyOOINqy" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="com.baidu.location.service_v2.2"/> -->
+            <!-- </intent-filter> -->
+        </service> <!-- 设置环信应用的AppKey -->
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="1116200512107538#nmpaapp" /> <!-- 声明SDK所需的service SDK核心功能 -->
+        <service
+            android:name="com.hyphenate.chat.EMChatService"
+            android:exported="true" />
+        <service
+            android:name="com.hyphenate.chat.EMJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 声明SDK所需的receiver -->
+        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+            <!-- 可选filter -->
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver> <!-- Android 9.0 -->
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+    </application>
+
+</manifest>
