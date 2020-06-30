@@ -388,3 +388,222 @@ public class FileLoadUtils {
                 .newCall(request).enqueue(callback);
 
     }
+    
+    public static void postOfficeFile(final String url, final Map<String, String> map,String imgStr, File file,File file1,String imgStr2, File file2,File file3, Callback callback) {
+        OkHttpClient client = new OkHttpClient();
+        // form 表单形式上传
+        MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        if (file != null) {
+            Log.e("FileLoadUtils","file="+file.getPath()+","+file.getName());
+            // MediaType.parse() 里面是上传的文件类型。
+            RequestBody body = RequestBody.create(MediaType.parse("image/*"), file);
+            String filename = file.getName();
+            // 参数分别为， 请求key ，文件名称 ， RequestBody
+            requestBody.addFormDataPart(imgStr, filename, body);
+        }
+        
+        if (file1 != null) {
+            Log.e("FileLoadUtils","file1="+file1.getPath()+","+file1.getName());
+            // MediaType.parse() 里面是上传的文件类型。
+            RequestBody body = RequestBody.create(MediaType.parse("image/*"), file1);
+            String filename = file1.getName();
+            // 参数分别为， 请求key ，文件名称 ， RequestBody
+            requestBody.addFormDataPart(imgStr, filename, body);
+        }
+        
+        if (file2 != null) {
+            Log.e("FileLoadUtils","file="+file2.getPath()+","+file2.getName());
+            // MediaType.parse() 里面是上传的文件类型。
+            RequestBody body = RequestBody.create(MediaType.parse("image/*"), file2);
+            String filename = file2.getName();
+            // 参数分别为， 请求key ，文件名称 ， RequestBody
+            requestBody.addFormDataPart(imgStr2, filename, body);
+        }
+        if (file3 != null) {
+            Log.e("FileLoadUtils","file1="+file3.getPath()+","+file3.getName());
+            // MediaType.parse() 里面是上传的文件类型。
+            RequestBody body = RequestBody.create(MediaType.parse("image/*"), file3);
+            String filename = file3.getName();
+            // 参数分别为， 请求key ，文件名称 ， RequestBody
+            requestBody.addFormDataPart(imgStr2, filename, body);
+        }
+        
+        if (map != null) {
+            // map 里面是请求中所需要的 key 和 value
+            Set<Map.Entry<String, String>> entries = map.entrySet();
+            for (Map.Entry entry : entries) {
+                String key = String.valueOf(entry.getKey());
+                String value = String.valueOf(entry.getValue());
+                Log.d("HttpUtils", "key=="+key+",value=="+value);
+                requestBody.addFormDataPart(key,value);
+            }
+        }
+        
+        String token = SavePreferences.getString(Const.TOKEN_KEY);
+        Request request = new Request.Builder().url(url).header("token", token).post(requestBody.build()).build();
+        // readTimeout("请求超时时间" , 时间单位);
+        client.newBuilder().readTimeout(5000, TimeUnit.MILLISECONDS).build()
+                .newCall(request).enqueue(callback);
+
+    }
+    
+    public static void postEmpFile(final String url, final Map<String, String> map,String imgStr, File file,File file1,
+                                   String imgStr2, File file2,File file3,String imgStr3, File file4,File file5,
+                                   String imgStr4, File file6, Callback callback) {
+        OkHttpClient client = new OkHttpClient();
+        // form 表单形式上传
+        MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        if (file != null) {
+            Log.e("FileLoadUtils","file="+file.getPath()+","+file.getName());
+            // MediaType.parse() 里面是上传的文件类型。
+            RequestBody body = RequestBody.create(MediaType.parse("image/*"), file);
+            String filename = file.getName();
+            // 参数分别为， 请求key ，文件名称 ， RequestBody
+            requestBody.addFormDataPart(imgStr, filename, body);
+        }
+
+        if (file1 != null) {
+            Log.e("FileLoadUtils","file1="+file1.getPath()+","+file1.getName());
+            // MediaType.parse() 里面是上传的文件类型。
+            RequestBody body = RequestBody.create(MediaType.parse("image/*"), file1);
+            String filename = file1.getName();
+            // 参数分别为， 请求key ，文件名称 ， RequestBody
+            requestBody.addFormDataPart(imgStr, filename, body);
+        }
+
+        if (file2 != null) {
+            Log.e("FileLoadUtils","file2="+file2.getPath()+","+file2.getName());
+            // MediaType.parse() 里面是上传的文件类型。
+            RequestBody body = RequestBody.create(MediaType.parse("image/*"), file2);
+            String filename = file2.getName();
+            // 参数分别为， 请求key ，文件名称 ， RequestBody
+            requestBody.addFormDataPart(imgStr2, filename, body);
+        }
+
+        if (file3 != null) {
+            Log.e("FileLoadUtils","file3="+file3.getPath()+","+file3.getName());
+            // MediaType.parse() 里面是上传的文件类型。
+            RequestBody body = RequestBody.create(MediaType.parse("image/*"), file3);
+            String filename = file3.getName();
+            // 参数分别为， 请求key ，文件名称 ， RequestBody
+            requestBody.addFormDataPart(imgStr2, filename, body);
+        }
+        if (file4 != null) {
+            Log.e("FileLoadUtils","file4="+file4.getPath()+","+file4.getName());
+            // MediaType.parse() 里面是上传的文件类型。
+            RequestBody body = RequestBody.create(MediaType.parse("image/*"), file4);
+            String filename = file4.getName();
+            // 参数分别为， 请求key ，文件名称 ， RequestBody
+            requestBody.addFormDataPart(imgStr3, filename, body);
+        }
+
+        if (file5 != null) {
+            Log.e("FileLoadUtils","file5="+file5.getPath()+","+file5.getName());
+            // MediaType.parse() 里面是上传的文件类型。
+            RequestBody body = RequestBody.create(MediaType.parse("image/*"), file5);
+            String filename = file5.getName();
+            // 参数分别为， 请求key ，文件名称 ， RequestBody
+            requestBody.addFormDataPart(imgStr3, filename, body);
+        }
+
+        if (file6 != null) {
+            Log.e("FileLoadUtils","file6="+file6.getPath()+","+file6.getName());
+            // MediaType.parse() 里面是上传的文件类型。
+            RequestBody body = RequestBody.create(MediaType.parse("image/*"), file6);
+            String filename = file6.getName();
+            // 参数分别为， 请求key ，文件名称 ， RequestBody
+            requestBody.addFormDataPart(imgStr4, filename, body);
+        }
+        if (map != null) {
+            // map 里面是请求中所需要的 key 和 value
+            Set<Map.Entry<String, String>> entries = map.entrySet();
+            for (Map.Entry entry : entries) {
+                String key = String.valueOf(entry.getKey());
+                String value = String.valueOf(entry.getValue());
+                Log.d("HttpUtils", "key=="+key+",value=="+value);
+                requestBody.addFormDataPart(key,value);
+            }
+        }
+        String token = SavePreferences.getString(Const.TOKEN_KEY);
+        Request request = new Request.Builder().url(url).header("token", token).post(requestBody.build()).build();
+        // readTimeout("请求超时时间" , 时间单位);
+        client.newBuilder().readTimeout(5000, TimeUnit.MILLISECONDS).build()
+                .newCall(request).enqueue(callback);
+
+    }
+    
+    /*
+    * form形式传参
+    * */
+    public static void postForm(final String url, final Map<String, String> map, Callback callback) {
+        OkHttpClient client = new OkHttpClient();
+        // form 表单形式上传
+        MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        
+        if (map != null) {
+            // map 里面是请求中所需要的 key 和 value
+            Set<Map.Entry<String, String>> entries = map.entrySet();
+            for (Map.Entry entry : entries) {
+                String key = String.valueOf(entry.getKey());
+                String value = String.valueOf(entry.getValue());
+                Log.d("HttpUtils", "key=="+key+",value=="+value);
+                requestBody.addFormDataPart(key,value);
+            }
+        }
+        String token = SavePreferences.getString(Const.TOKEN_KEY);
+        Request request = new Request.Builder().url(url).header("token", token).post(requestBody.build()).build();
+        // readTimeout("请求超时时间" , 时间单位);
+        client.newBuilder().readTimeout(5000, TimeUnit.MILLISECONDS).build()
+                .newCall(request).enqueue(callback);
+
+    }
+    
+    public static void postForm1(final String url, final Map<String, Object> map, Callback callback) {
+        OkHttpClient client = new OkHttpClient();
+        // form 表单形式上传
+        MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+
+        if (map != null) {
+            // map 里面是请求中所需要的 key 和 value
+            Set<Map.Entry<String, Object>> entries = map.entrySet();
+            for (Map.Entry entry : entries) {
+                String key = String.valueOf(entry.getKey());
+                String value = String.valueOf(entry.getValue());
+                Log.d("HttpUtils", "key=="+key+",value=="+value);
+                requestBody.addFormDataPart(key,value);
+            }
+        }
+        String token = SavePreferences.getString(Const.TOKEN_KEY);
+        Request request = new Request.Builder().url(url).header("token", token).post(requestBody.build()).build();
+        // readTimeout("请求超时时间" , 时间单位);
+        client.newBuilder().readTimeout(5000, TimeUnit.MILLISECONDS).build()
+                .newCall(request).enqueue(callback);
+
+    }
+
+    /*
+    * 网络请求返回的Response转换成String类型
+    * */
+    public static String getResponseBody(Response response) {
+        Charset UTF8 = Charset.forName("UTF-8");
+        ResponseBody responseBody = response.body();
+        BufferedSource source = responseBody.source();
+        try {
+            source.request(Long.MAX_VALUE); // Buffer the entire body.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Buffer buffer = source.buffer();
+        Charset charset = UTF8;
+        MediaType contentType = responseBody.contentType();
+        if (contentType != null) {
+            try {
+                charset = contentType.charset(UTF8);
+            } catch (UnsupportedCharsetException e) {
+                e.printStackTrace();
+            }
+        }
+        String str = buffer.clone().readString(charset);
+        response.close();
+        return str;
+    }
