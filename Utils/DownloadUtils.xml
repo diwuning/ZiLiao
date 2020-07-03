@@ -216,4 +216,11 @@ public class DownloadUtils {
         }
         return root;
     }
+                            
+    // 开启安装未知来源权限
+    public static void toInstallPermissionSettingIntent() {
+        Uri packageURI = Uri.parse("package:"+getPackageName());
+        Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
+        startActivityForResult(intent, 100);
+    }
 }
