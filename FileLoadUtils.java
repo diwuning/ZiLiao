@@ -703,5 +703,38 @@ public class FileLoadUtils {
         lastClickTime = curClickTime;
         return flag;
     }
+    
+    /*
+    * 删除设备里的文件
+    * */
+    public static void deleteFile(Context mContext,String path) {
+        Log.e(TAG,"deleteFile  path="+path);
+        File file = new File(path);
+        //删除系统缩略图
+        mContext.getContentResolver().delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, MediaStore.Images.Media.DATA + "=?", new String[]{path});
+        //删除手机中图片
+        file.delete();
+    }
+    
+    /*
+    * 打开word文档
+    * */
+    public static void openDoc(Context mContext,File file) {
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.addCategory("android.intent.category.DEFAULT");
+        Uri data;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // "net.csdn.blog.ruancoder.fileprovider"即是在清单文件中配置的authorities
+            data = FileProvider.getUriForFile(mContext, "com.nmpa.nmpaapp.file.provider", file);
+            // 给目标应用一个临时授权
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            data = Uri.fromFile(file);
+        }
+        intent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
+        //如果不加判断，直接用Uri.fromFile的形式传参，会报错
+        intent.setDataAndType(data, "application/msword");
+        mContext.startActivity(intent);
+    }
 
 }
