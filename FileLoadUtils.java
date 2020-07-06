@@ -736,5 +736,24 @@ public class FileLoadUtils {
         intent.setDataAndType(data, "application/msword");
         mContext.startActivity(intent);
     }
+    
+    /*
+    * 两个控件共用一段长度，文本宽度大于进度时，文本的比重为文本宽度，小时比重为进度；view相当于一个占位符
+    * */
+    private void setTextViewWidth(TextView textView,View view,float speed) {
+        Paint paint = new Paint();
+        float textWidth = paint.measureText(textView.getText().toString());
+        Log.d(TAG,"textWidth="+textWidth);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) textView.getLayoutParams();
+        LinearLayout.LayoutParams params1 = (LinearLayout.LayoutParams) view.getLayoutParams();
+        if (textWidth > speed) {
+            params.weight = textWidth;
+            params1.weight = 100 - textWidth;
+        } else {
+            params.weight = speed;
+            params1.weight = 100 - speed;
+        }
+
+    }
 
 }
