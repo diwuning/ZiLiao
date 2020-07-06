@@ -165,4 +165,85 @@ public class OfficeTypeDialog extends Dialog implements View.OnClickListener {
             }
         });
     }
+    
+    private void initTypeList() {
+        rv_typeTree.setLayoutManager(new LinearLayoutManager(mContext));
+        typeTreeRecyclerAdapter = new TypeTreeRecyclerAdapter(rv_typeTree, mContext,
+                mDatas, 1,R.drawable.tree_expand,R.drawable.tree_econpand, true);
+        rv_typeTree.setAdapter(typeTreeRecyclerAdapter);
+        typeTreeRecyclerAdapter.setOnItemClickListener(new TypeTreeRecyclerAdapter.onAItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Log.e(TAG,"position="+position);
+                updatePosition(position);
+                clickShow();
+            }
+        });
+    }
+    
+    /**
+     * 更新选择窗
+     *
+     * @param selectedPosition 选中位置
+     */
+    public void updatePosition(int selectedPosition) {
+        if (typeTreeRecyclerAdapter != null) {
+            typeTreeRecyclerAdapter.setSelectedPosition(selectedPosition);
+            typeTreeRecyclerAdapter.notifyDataSetChanged();
+        }
+    }
+    
+    /**
+     * 显示选中数据
+     */
+    public void clickShow(){
+//        StringBuilder sb = new StringBuilder();
+        List<TypeTreeBean> typeTreeBeanList = new ArrayList<>();
+        final List<Node> allNodes = typeTreeRecyclerAdapter.getAllNodes();
+        for (int i = 0; i < allNodes.size(); i++) {
+            if (allNodes.get(i).isChecked()){
+                //                sb.append(allNodes.get(i).getName()+",");
+                typeTreeBeanList.add((TypeTreeBean) allNodes.get(i).bean);
+            }
+        }
+//        String strNodesName = sb.toString();
+        if (typeTreeBeanList != null && typeTreeBeanList.size() != 0) {
+            Log.e(TAG,"bean="+typeTreeBeanList.get(0).getName());
+            selectedBean = typeTreeBeanList.get(0);
+        }
+    }
+    
+    /**
+     * 设置确定取消按钮的回调
+     */
+    public OnClickBottomListener onClickBottomListener;
+    public void setOnClickBottomListener(OnClickBottomListener onClickBottomListener) {
+        this.onClickBottomListener = onClickBottomListener;
+    }
+    public interface OnClickBottomListener{
+        /**
+         * 点击确定按钮事件
+         */
+        public void onPositiveClick(TypeTreeBean typeBean);
+        /**
+         * 点击取消按钮事件
+         */
+        public void onNegtiveClick();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_confirm:
+                if ( onClickBottomListener!= null) {
+                    onClickBottomListener.onPositiveClick(selectedBean);
+                }
+                break;
+            case R.id.btn_cancel:
+                if ( onClickBottomListener!= null) {
+                    onClickBottomListener.onNegtiveClick();
+                }
+                break;
+        }
+    }
 }
