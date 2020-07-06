@@ -148,4 +148,131 @@ public class BaseApplication extends Application {
 
     private void getIotToken() {
         OkHttpUtils.post().url("https://api2.hik-cloud.com/oauth/token")
-        
+                .addParams("client_id",Const.CLIENT_ID)
+                .addParams("client_secret",Const.CLIENT_SECRET)
+                .addParams("grant_type","client_credentials")
+                .addParams("scope","app").build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.e(TAG,"getIotToken e="+e.toString());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.e(TAG,"getIotToken response="+response.toString());
+                        //{"access_token":"136f9a7c-89b2-430c-9f22-eca69d90e4e4","token_type":"bearer","refresh_token":null,"scope":"app","expires_in":258213}
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            SPUtils.put(getApplicationContext(),"SP_SDK_OUATH_TOKEN_VAL",object.getString("access_token"));
+                            iotToken = object.getString("access_token");
+                            initIot();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+    
+    private void initARouter() {
+        // These two lines must be written before init,
+        // otherwise these configurations will be invalid in the init process
+        if (BuildConfig.IS_DEBUG) {
+            // Print log
+            ARouter.openLog();
+            // Turn on debugging mode (If you are running in InstantRun mode,
+            // you must turn on debug mode! Online version needs to be closed,
+            // otherwise there is a security risk)
+            ARouter.openDebug();
+        }
+        // As early as possible, it is recommended to initialize in the Application
+        ARouter.init(this);
+    }
+    
+    /**
+     * 保存进程id到偏好设置,用于判断进程是否被杀死
+     */
+    private void checkKillStatus() {
+        int pid = android.os.Process.myPid();
+        SavePreferences.setData(ApplicationProperty.APP_PID, pid);
+    }
+    
+    /**
+     * 获取当前进程名称
+     *
+     * @param context application对象
+     * @return 当前进程名称
+     */
+    private String getCurProcessName(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager.getRunningAppProcesses()) {
+            if (appProcess.pid == pid) {
+                return appProcess.processName;
+            }
+        }
+        return "";
+    }
+    
+    /**
+     * 初始化日志管理
+     */
+    private void initLog() {
+        if (BuildConfig.IS_DEBUG) {
+            LogUtil.setDevelopMode(true);
+        } else {
+            LogUtil.setDevelopMode(false);
+        }
+    }
+    
+    /**
+     * 初始化Okhttp
+     */
+    private void initOkHttp() {
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new LoggerInterceptor("TAG"))
+                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
+                .readTimeout(10000L, TimeUnit.MILLISECONDS)
+                //其他配置
+                .build();
+
+        OkHttpUtils.initClient(okHttpClient);
+    }
+    
+    /**
+     * 初始化内存泄露检测包
+     */
+    private void initLeakCanary() {
+        //lekCanary 2.2
+        // Content providers are loaded before the application class is created.
+        // [LeakSentryInstaller] is used to install [leaksentry.LeakSentry] on application start.
+//        if (LeakCanary.isInAnalyzerProcess(getApplicationContext())) {
+//            // This process is dedicated to LeakCanary for heap analysis.
+//            // You should not init your app in this process.
+//            return;
+//        }
+//        LeakCanary.install(this);
+    }
+
+    private ForegroundCallbacks.Listener foreGroundSwitchListener = new ForegroundCallbacks.Listener() {
+        @Override
+        public void onBecameForeground() {
+            LogUtil.i(TAG, "回到前台");
+        }
+        @Override
+        public void onBecameBackground() {
+            LogUtil.i(TAG, "压到后台");
+        }
+    };
+
+    private void initDisplayOpinion() {
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        DisplayUtil.density = dm.density;
+        DisplayUtil.densityDPI = dm.densityDpi;
+        DisplayUtil.screenWidthPx = dm.widthPixels;
+        DisplayUtil.screenhightPx = dm.heightPixels;
+        DisplayUtil.screenWidthDip = DisplayUtil.px2dip(getApplicationContext(), dm.widthPixels);
+        DisplayUtil.screenHightDip = DisplayUtil.px2dip(getApplicationContext(), dm.heightPixels);
+    }
+
+}
