@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/colorTextWhite"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:text="选择单位类别"
+        android:id="@+id/title"
+        android:textSize="@dimen/font_16"
+        android:layout_marginLeft="@dimen/px30"
+        android:textColor="@color/boxing_black"
+        android:layout_marginVertical="@dimen/px20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <View
+        android:id="@+id/view"
+        android:layout_below="@+id/title"
+        android:background="@color/color_border"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px1"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginHorizontal="@dimen/px20"
+        android:id="@+id/rv_typeTree"
+        android:layout_below="@+id/view"
+        android:layout_above="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_marginVertical="@dimen/px20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_confirm"
+            android:text="确定"
+            android:paddingVertical="@dimen/px20"
+            android:textColor="@color/colorTextWhite"
+            android:background="@drawable/bg_button_radius_bluedark"
+            android:layout_toLeftOf="@+id/btn_cancel"
+            android:layout_width="@dimen/px200"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_cancel"
+            android:text="关闭"
+            android:paddingVertical="@dimen/px20"
+            android:layout_marginHorizontal="@dimen/px30"
+            android:background="@drawable/bg_button_radius_999"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/px200"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
