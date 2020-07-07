@@ -755,5 +755,11 @@ public class FileLoadUtils {
         }
 
     }
+    //跳转到手机的位置服务页面
+    public static void openLocation() {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        //2600是请求码，可以在onActivityResult中根据该请求码判断用户是否已经在设置页面打开位置服务
+        startActivityForResult(intent, 2600);
+    }
 
 }
