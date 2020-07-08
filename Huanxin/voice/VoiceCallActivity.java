@@ -369,3 +369,56 @@ import java.util.UUID;
     }
 
     PhoneStateManager.PhoneStateCallback phoneStateCallback = new PhoneStateManager.PhoneStateCallback() {
+	    @Override
+        public void onCallStateChanged(int state, String incomingNumber) {
+            switch (state) {
+                case TelephonyManager.CALL_STATE_RINGING:   // 电话响铃
+                    break;
+                case TelephonyManager.CALL_STATE_IDLE:      // 电话挂断
+                    // resume current voice conference.
+                    if (isMuteState) {
+			    try {
+                            EMClient.getInstance().callManager().resumeVoiceTransfer();
+                        } catch (HyphenateException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                case TelephonyManager.CALL_STATE_OFFHOOK:   // 来电接通 或者 去电，去电接通  但是没法区分
+			Log.e(TAG, "TelephonyManager.CALL_STATE_OFFHOOK   接通");
+                    // pause current voice conference.
+                    if (!isMuteState) {
+                        try {
+                            EMClient.getInstance().callManager().pauseVoiceTransfer();
+                        } catch (HyphenateException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+            }
+        }
+    };
+	 
+	private boolean isRecording = false;
+    AudioRecordImpl audioRecordImpl = new AudioRecordImpl();
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_refuse_call:
+                isRefused = true;
+                refuseBtn.setEnabled(false);
+                handler.sendEmptyMessage(MSG_CALL_REJECT);
+                break;
+	case R.id.btn_answer_call:
+                answerBtn.setEnabled(false);
+                closeSpeakerOn();
+                callStateTextView.setText("正在接听...");
+                comingBtnContainer.setVisibility(View.INVISIBLE);
+                hangupBtn.setVisibility(View.VISIBLE);
+                voiceContronlLayout.setVisibility(View.VISIBLE);
+                handler.sendEmptyMessage(MSG_CALL_ANSWER);
+                break;
+	}
+    }
+ }
