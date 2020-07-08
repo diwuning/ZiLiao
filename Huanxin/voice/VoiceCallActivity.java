@@ -419,6 +419,100 @@ import java.util.UUID;
                 voiceContronlLayout.setVisibility(View.VISIBLE);
                 handler.sendEmptyMessage(MSG_CALL_ANSWER);
                 break;
-	}
+	case R.id.btn_hangup_call:
+                hangupBtn.setEnabled(false);
+                chronometer.stop();
+                endCallTriggerByMe = true;
+                callStateTextView.setText(getResources().getString(R.string.hanging_up));
+                handler.sendEmptyMessage(MSG_CALL_END);
+                break;
+	case R.id.iv_mute:
+                if (isMuteState) {
+                    muteImage.setImageResource(R.drawable.em_icon_mute_normal);
+                    try {
+                        EMClient.getInstance().callManager().resumeVoiceTransfer();
+                    } catch (HyphenateException e) {
+                        e.printStackTrace();
+                    }
+                    isMuteState = false;
+                } else {
+			muteImage.setImageResource(R.drawable.em_icon_mute_on);
+                    try {
+                        EMClient.getInstance().callManager().pauseVoiceTransfer();
+                    } catch (HyphenateException e) {
+                        e.printStackTrace();
+                    }
+                    isMuteState = true;
+                }
+                break;
+	case R.id.iv_record:
+                if (isRecording) {
+                    recordImage.setImageResource(R.drawable.em_icon_record_normal);
+//                ExternalAudioInputRecord.getInstance().stopRecording();
+//                stopRecoding();
+                    audioRecordImpl.stopRecord();
+//                audioUtils.stopRecord();
+                    isRecording = false;
+                } else {
+			recordImage.setImageResource(R.drawable.em_icon_recording);
+                    if (ContextCompat.checkSelfPermission(VoiceCallActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(VoiceCallActivity.this
+                                , new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO}, 1);
+                    } else {
+//                    int status = RecordUtil.getRecordState();
+//                    Log.e(TAG,"status="+status);
+//                    startRecording(mContext);
+                        audioRecordImpl.startRecord();
+//                    audioUtils.stopPlayer();
+//                    audioUtils.startRecord(mContext);
+//                    Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+//                    startActivityForResult(intent,3001);
+
+                    }
+                    isRecording = true;
+                }
+                break;
+	case R.id.iv_handsfree:
+                if (isHandsfreeState) {
+                    handsFreeImage.setImageResource(R.drawable.em_icon_speaker_normal);
+                    closeSpeakerOn();
+                    isHandsfreeState = false;
+                } else {
+                    handsFreeImage.setImageResource(R.drawable.em_icon_speaker_on);
+                    openSpeakerOn();
+                    isHandsfreeState = true;
+                }
+                break;
+	default:
+                break;
+        }
     }
+
+    private void onRecord(boolean start) {
+        Intent intent = new Intent(mContext, RecordingService.class);
+        if (start) {
+            File folder = new File(Environment.getExternalStorageDirectory() + "/SoundRecorder");
+            if (!folder.exists()) {
+                folder.mkdir();
+            }
+		startService(intent);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        } else {
+            stopService(intent);
+//            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+    }
+	 AudioUtils audioUtils = new AudioUtils();
+
+    private void startAudio() {
+
+        audioUtils.stopPlayer();
+        audioUtils.startRecord(mContext);
+
+    }
+
+    MediaRecorder recorder;
+    private File file;
+    private String voiceFilePath;
  }
