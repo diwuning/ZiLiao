@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".modules.monitor.RealPlayerActivity">
+    <RelativeLayout
+        android:id="@+id/realplay_player_area"
+        android:layout_width="match_parent"
+        android:layout_height="220dp">
+
+        <SurfaceView
+            android:id="@+id/realplay_id_surface_v"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent" />
+        <ProgressBar
+            android:id="@+id/realplay_id_pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/player_play_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#80000000"
+            android:layout_centerInParent="true"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/player_play_normal"/>
+        </RelativeLayout>
+        <include
+            android:id="@+id/play_control_bar"
+            layout="@layout/video_play_control"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"/>
+    </RelativeLayout>
+    <ScrollView
+        android:id="@+id/realplay_player_control_area"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_marginHorizontal="@dimen/px40"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_marginTop="@dimen/px60"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <View
+                        android:layout_centerVertical="true"
+                        android:background="@color/realplayer_blue"
+                        android:layout_width="@dimen/px13"
+                        android:layout_height="@dimen/px28"/>
+                    <TextView
+                        android:layout_marginLeft="@dimen/px48"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/font_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="通道列表" />
+                    <TextView
+                        android:text="当前通道号："
+                        android:textColor="@color/color_reset_bg"
+                        android:textSize="@dimen/font_14"
+                        android:layout_toLeftOf="@+id/tv_channelName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/tv_channelName"
+                        android:textSize="@dimen/font_14"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textStyle="bold"
+                        android:textColor="@color/realplayer_blue" />
+                </RelativeLayout>
+                <com.nmpa.nmpaapp.widget.CustomGridView
+                    android:id="@+id/gv_channel"
+                    android:layout_marginTop="@dimen/px60"
+                    android:numColumns="1"
+                    android:verticalSpacing="@dimen/px30"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px60"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <View
+                        android:layout_centerVertical="true"
+                        android:background="@color/realplayer_blue"
+                        android:layout_width="@dimen/px13"
+                        android:layout_height="@dimen/px28"/>
+                    <TextView
+                        android:layout_marginLeft="@dimen/px48"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/font_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="视频预览" />
+                    <TextView
+                        android:text="当前状态："
+                        android:textColor="@color/color_reset_bg"
+                        android:textSize="@dimen/font_14"
+                        android:layout_toLeftOf="@+id/tv_play_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/tv_play_status"
+                        android:textSize="@dimen/font_14"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="开启"
+                        android:textStyle="bold"
+                        android:textColor="@color/realplayer_blue" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/px60"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/realplay_id_play_start_btn"
+                        android:background="@drawable/real_btn_selector"
+                        android:textSize="@dimen/font_12"
+                        android:layout_width="141px"
+                        android:layout_height="@dimen/px68"
+                        android:text="开始预览" />
+                    <Button
+                        android:id="@+id/realplay_id_play_stop_btn"
+                        android:layout_marginLeft="@dimen/px60"
+                        android:textSize="@dimen/font_12"
+                        android:background="@drawable/real_btn_selector"
+                        android:layout_width="141px"
+                        android:layout_height="@dimen/px68"
+                        android:text="停止预览" />
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:background="@color/color_abnormal_line"
+                android:layout_marginTop="@dimen/px60"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px60"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <View
+                        android:background="@color/realplayer_blue"
+                        android:layout_centerVertical="true"
+                        android:layout_width="@dimen/px13"
+                        android:layout_height="@dimen/px28"/>
+                    <TextView
+                        android:layout_marginLeft="@dimen/px48"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/font_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="声音开关" />
+                    <TextView
+                        android:text="当前状态："
+                        android:textColor="@color/color_reset_bg"
+                        android:textSize="@dimen/font_14"
+                        android:layout_toLeftOf="@+id/realplay_id_sound_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/realplay_id_sound_status"
+                        android:textSize="@dimen/font_14"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="开启"
+                        android:textStyle="bold"
+                        android:textColor="@color/realplayer_blue" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/px60"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/realplay_id_sound_start_btn"
+                        android:background="@drawable/real_btn_selector"
+                        android:textSize="@dimen/font_12"
+                        android:layout_width="141px"
+                        android:layout_height="@dimen/px68"
+                        android:text="开启声音" />
+
+                    <Button
+                        android:id="@+id/realplay_id_sound_stop_btn"
+                        android:layout_marginLeft="@dimen/px60"
+                        android:textSize="@dimen/font_12"
+                        android:background="@drawable/real_btn_selector"
+                        android:layout_width="141px"
+                        android:layout_height="@dimen/px68"
+                        android:text="关闭声音" />
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:background="@color/color_abnormal_line"
+                android:layout_marginTop="@dimen/px60"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px60"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <View
+                        android:background="@color/realplayer_blue"
+                        android:layout_centerVertical="true"
+                        android:layout_width="@dimen/px13"
+                        android:layout_height="@dimen/px28"/>
+                    <TextView
+                        android:layout_marginLeft="@dimen/px48"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/font_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="清晰度切换" />
+                    <TextView
+                        android:text="当前状态："
+                        android:textColor="@color/color_reset_bg"
+                        android:textSize="@dimen/font_14"
+                        android:layout_toLeftOf="@+id/realplay_id_level_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/realplay_id_level_status"
+                        android:textSize="@dimen/font_14"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="开启"
+                        android:textStyle="bold"
+                        android:textColor="@color/realplayer_blue" />
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_marginTop="@dimen/px60"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/realplay_id_level_flunet_btn"
+                        android:background="@drawable/real_btn_selector"
+                        android:textSize="@dimen/font_12"
+                        android:layout_width="141px"
+                        android:layout_height="@dimen/px68"
+                        android:text="流畅" />
+
+                    <Button
+                        android:id="@+id/realplay_id_level_balanced_btn"
+                        android:layout_marginLeft="@dimen/px40"
+                        android:textSize="@dimen/font_12"
+                        android:background="@drawable/real_btn_selector"
+                        android:layout_width="141px"
+                        android:layout_height="@dimen/px68"
+                        android:text="均衡" />
+                    <Button
+                        android:id="@+id/realplay_id_level_hd_btn"
+                        android:layout_marginLeft="@dimen/px40"
+                        android:textSize="@dimen/font_12"
+                        android:background="@drawable/real_btn_selector"
+                        android:layout_width="141px"
+                        android:layout_height="@dimen/px68"
+                        android:text="高清" />
+                    <Button
+                        android:id="@+id/realplay_id_level_superclear_btn"
+                        android:layout_marginLeft="@dimen/px40"
+                        android:textSize="@dimen/font_12"
+                        android:background="@drawable/real_btn_selector"
+                        android:layout_width="141px"
+                        android:layout_height="@dimen/px68"
+                        android:text="超清" />
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:background="@color/color_abnormal_line"
+                android:layout_marginTop="@dimen/px60"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px60"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <View
+                        android:background="@color/realplayer_blue"
+                        android:layout_centerVertical="true"
+                        android:layout_width="@dimen/px13"
+                        android:layout_height="@dimen/px28"/>
+                    <TextView
+                        android:layout_marginLeft="@dimen/px48"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/font_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="录制功能" />
+                    <TextView
+                        android:text="当前状态："
+                        android:textColor="@color/color_reset_bg"
+                        android:textSize="@dimen/font_14"
+                        android:layout_toLeftOf="@+id/realplay_id_record_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/realplay_id_record_status"
+                        android:textSize="@dimen/font_14"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="关闭"
+                        android:textStyle="bold"
+                        android:textColor="@color/realplayer_blue" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/px60"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/realplay_id_record_start_btn"
+                        android:background="@drawable/real_btn_selector"
+                        android:textSize="@dimen/font_12"
+                        android:layout_width="141px"
+                        android:layout_height="@dimen/px68"
+                        android:text="开启录制" />
+
+                    <Button
+                        android:id="@+id/realplay_id_record_stop_btn"
+                        android:layout_marginLeft="@dimen/px60"
+                        android:textSize="@dimen/font_12"
+                        android:background="@drawable/real_btn_selector"
+                        android:layout_width="141px"
+                        android:layout_height="@dimen/px68"
+                        android:text="关闭录制" />
+
+                    <Button
+                        android:id="@+id/realplay_id_record_back_btn"
+                        android:layout_marginLeft="@dimen/px60"
+                        android:textSize="@dimen/font_12"
+                        android:background="@drawable/real_btn_selector"
+                        android:layout_width="141px"
+                        android:layout_height="@dimen/px68"
+                        android:text="回放" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:background="@color/color_abnormal_line"
+                android:layout_marginTop="@dimen/px60"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px60"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <View
+                        android:background="@color/realplayer_blue"
+                        android:layout_centerVertical="true"
+                        android:layout_width="@dimen/px13"
+                        android:layout_height="@dimen/px28"/>
+                    <TextView
+                        android:layout_marginLeft="@dimen/px48"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/font_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="对讲功能" />
+                    <TextView
+                        android:text="当前状态："
+                        android:textColor="@color/color_reset_bg"
+                        android:textSize="@dimen/font_14"
+                        android:layout_toLeftOf="@+id/realplay_id_talk_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/realplay_id_talk_status"
+                        android:textSize="@dimen/font_14"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="关闭"
+                        android:textStyle="bold"
+                        android:textColor="@color/realplayer_blue" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/px60"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/realplay_id_talk_start_btn"
+                        android:background="@drawable/real_btn_selector"
+                        android:textSize="@dimen/font_12"
+                        android:layout_width="141px"
+                        android:layout_height="@dimen/px68"
+                        android:text="开启对讲" />
+
+                    <Button
+                        android:id="@+id/realplay_id_talk_stop_btn"
+                        android:layout_marginLeft="@dimen/px60"
+                        android:textSize="@dimen/font_12"
+                        android:background="@drawable/real_btn_selector"
+                        android:layout_width="141px"
+                        android:layout_height="@dimen/px68"
+                        android:text="关闭对讲" />
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:background="@color/color_abnormal_line"
+                android:layout_marginTop="@dimen/px60"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px1"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px60"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <View
+                        android:background="@color/realplayer_blue"
+                        android:layout_centerVertical="true"
+                        android:layout_width="@dimen/px13"
+                        android:layout_height="@dimen/px28"/>
+                    <TextView
+                        android:layout_marginLeft="@dimen/px48"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/font_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="其他功能" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/px60"
+                    android:layout_marginBottom="@dimen/px60"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/realplay_id_capture_btn"
+                        android:background="@drawable/real_btn_selector"
+                        android:textSize="@dimen/font_12"
+                        android:layout_width="141px"
+                        android:layout_height="@dimen/px68"
+                        android:text="抓图" />
+
+                    <Button
+                        android:id="@+id/realplay_id_ptz_btn"
+                        android:layout_marginLeft="@dimen/px60"
+                        android:textSize="@dimen/font_12"
+                        android:background="@drawable/real_btn_selector"
+                        android:layout_width="141px"
+                        android:layout_height="@dimen/px68"
+                        android:text="云台控制" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
