@@ -21,4 +21,65 @@ public class BackPlayerListActivity extends BaseActivity {
     @BindView(R.id.prr_record)
     RecyclerView prr_record;
     private List<PlayBean> playBeans = new ArrayList<>();
+    @Override
+    public void onBeforeSetContentView() {
+
+    }
+
+    @Override
+    public int getLayoutResID() {
+        return R.layout.activity_back_player_list;
+    }
+
+    @Override
+    protected CharSequence setActionBarTitle() {
+        return "视频录制列表";
+    }
+    
+    @Nullable
+    @Override
+    public AppBarConfig getAppBarConfig() {
+        return mAppBarCompat;
+    }
+
+    @Override
+    public void initContentView(@Nullable Bundle savedInstanceState) {
+        mContext = BackPlayerListActivity.this;
+
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
+        getLocalRecordData();
+    }
+    
+    String video_path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/";
+    File[] files = {};
+    private void getLocalRecordData() {
+
+        File file = new File(video_path);
+        //判断文件夹是否存在，如果不存在就创建一个
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        files = file.listFiles();
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].getName().endsWith(".mp4")) {
+                File file1 = files[i];
+                PlayBean playBean = new PlayBean();
+                playBean.setName(file1.getName());
+                playBean.setPath(file1.getPath());
+                String date = file1.getName().substring(4,18);
+                String recordDate = date.substring(0,4)+"-"+date.substring(4,6)+"-"+date.substring(6,8)+" "+date.substring(8,10)+":"+date.substring(10,12);
+                Log.e(TAG,"date="+date+","+recordDate);
+                playBean.setRecordDate(recordDate);
+                playBeans.add(playBean);
+            }
+        }
+        BackPlayAdapter backPlayAdapter = new BackPlayAdapter(mContext, playBeans);
+        LinearLayoutManager manager = new LinearLayoutManager(mContext);
+        manager.setOrientation(RecyclerView.VERTICAL);
+        prr_record.setLayoutManager(manager);
+        prr_record.setAdapter(backPlayAdapter);
+    }
 }
