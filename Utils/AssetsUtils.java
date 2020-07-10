@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class AssetsUtils {
+    //读取assets中的json文件
     public static Object assetsFile2Bean(String assetsName, Class beanClass) {
         //将json数据变成字符串
         StringBuilder result = new StringBuilder();
