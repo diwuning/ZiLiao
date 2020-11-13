@@ -40,8 +40,11 @@ public class SelectpRrovinceCityDlg extends BaseDialogFragment {
     private List<TextView> mProvinceTvList = new ArrayList<>();
     private List<TextView> mCityTvList = new ArrayList<>();
     private List<TextView> mAreaTvList = new ArrayList<>();
+    //ShengListBean.DataBean包含id，provinceCode，province
     private ShengListBean.DataBean mCurrentProvinceBean;
+    //ShiListBean.DataBean包含id，cityCode，city，provinceCode
     private ShiListBean.DataBean mCurrentCityBean;
+    //QuListBean.DataBean包含id，cityCode，cityName，provinceCode，provinceName，areaCode，area
     private QuListBean.DataBean mCurrentAreaBean;
     private View mFlag;
     private ScrollView areaView;
