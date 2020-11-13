@@ -1,11 +1,13 @@
 public class HomeListFragment extends BaseFragment {
-  private ArrayList<QuListBean.DataBean> selectedList1 = new ArrayList<>();
-    private ArrayList<QuListBean.DataBean> selectedList2 = new ArrayList<>();
+  
+    //选中的省市区，再次点击弹出省市区选择框时要回传。
+    private ArrayList<QuListBean.DataBean> selectedList1 = new ArrayList<>();
+    
     @OnClick({R.id.tvItem01, R.id.tvItem02, R.id.tvItem04})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvItem01:
-            //打开地区选择器
+                //打开地区选择器
                 SelectpRrovinceCityDialog.getInstance().setContext(getActivity())
                         .setFlag(tvItem01)
                         .setVisiableOfView(true)
