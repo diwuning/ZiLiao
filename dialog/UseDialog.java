@@ -6,10 +6,10 @@ public class HomeListFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.tvItem01:
             //打开地区选择器
-                SelectpRrovinceCityDlg.getInstance().setContext(getActivity())
+                SelectpRrovinceCityDialog.getInstance().setContext(getActivity())
                         .setFlag(tvItem01)
                         .setVisiableOfView(true)
-                        .setCallback(new SelectpRrovinceCityDlg.Callback() {
+                        .setCallback(new SelectpRrovinceCityDialog.Callback() {
                             @Override
                             public void onCallback(View flag, ArrayList<QuListBean.DataBean> areaBeans) {
                                 if (areaBeans == null || areaBeans.size() == 0) {
